@@ -6,7 +6,7 @@ function App() {
 
   const fazerAnalise = async () => {
     if (!arquivo) {
-      alert("Por favor, seleione uma imagem primeiro!")
+      alert("Por favor, selecione uma imagem primeiro!")
       return
     }
 
@@ -33,9 +33,9 @@ function App() {
       <h1>Lumus - The BookShelf Scanner</h1>
 
       <input
-      type="file"
-      accept="image/*"
-      onChange={(e) => setArquivo(e.target.files[0])}
+        type="file"
+        accept="image/*"
+        onChange={(e) => setArquivo(e.target.files[0])}
       />
 
       <br /><br />
@@ -44,11 +44,30 @@ function App() {
         Analisar Minha Estante
       </button>
 
-      {resposta && (
-        <div style={{ marginTop: "20px", background: "#f0f0f0", padding: "20px", color: "#000" }}>
-          <h3>Resultado:</h3>
-          <pre style={{ whiteSpace: "pre-wrap" }}>{JSON.stringify(resposta, null, 2)}</pre>
-          </div>
+      {resposta && resposta.dados && resposta.dados.livros_identificados.map((livro, index) => (
+        <div key={index} style={{ border: "1px solid #ddd", padding: "10px", margin: "10px 0", borderRadius: "5px" }}>
+          <h3>{livro.titulo}</h3>
+          <p><strong>Autor:</strong> {livro.autor}</p>
+        </div>
+      ))}
+
+      {resposta && resposta.dados && resposta.dados.recomendacoes && (
+        <div style={{ marginTop: "30px" }}>
+          <h2>Recomendações para você:</h2>
+          {resposta.dados.recomendacoes.map((rec, index) => (
+            <div key={index} style={{ 
+              border: "1px solid #8d6e63", 
+              background: "#efebe9", 
+              padding: "10px", 
+              margin: "10px 0", 
+              borderRadius: "5px",
+              color: "#3e2723"
+            }}>
+              <h3>{rec.titulo}</h3>
+              <p>{rec.motivo}</p>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )
