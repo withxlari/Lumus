@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from main import analisar_estante
@@ -18,14 +19,16 @@ def home():
 
 @app.post("/analisar_estante")
 async def analisar(arquivo: UploadFile):
-    # salvar o arquivo recebido como "temp.jpg"
     with open("temp.jpg", "wb") as buffer:
         conteudo = await arquivo.read()
         buffer.write(conteudo)
     
-    # chamar a ia
     print("Analisando imagem...")
-    resultado = analisar_estante("temp.jpg")
+    resultado_texto = analisar_estante("temp.jpg")
 
-    # devolver o json pra quem pediu
-    return {"dados": resultado}
+    try:
+        resultado_limpo = json.loads(resultado_texto)
+    except:
+        resultado_limpo = resultado_texto
+
+    return {"dados": resultado_limpo}

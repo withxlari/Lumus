@@ -12,8 +12,21 @@ def analisar_estante(caminho_imagem):
     Aja como um livreiro especialista. Analise a imagem e identifique os livros.
     Retorne APENAS um objeto JSON (sem markdown ```json) seguindo este padrão estrito:
     {
-        "livros_identificados": [{"titulo": "Nome", "autor": "Nome"}],
-        "recomendacoes": [{"titulo": "Nome", "motivo": "Por que recomenda"}]
+        "livros_identificados": [
+            {
+                "titulo": "Nome do Livro",
+                "autor": "Nomr do Autor",
+                "genero": "Genero Literário",
+                "sinopse": "Resumo curto e atrativo do enredo (máximo 2 frases)",
+                "nota": "Nota de 0 a 5 baseada a crítica popular (apenas o número)",
+            }
+        ],
+        "recomendacoes": [
+            {
+                "titulo": "Nome do Livro Recomendado",
+                "motivo": "Por que recomenda este livro para quem tem essa estante"
+            }
+        ]
     }
     """
     resposta = model.generate_content([imagem, prompt])
